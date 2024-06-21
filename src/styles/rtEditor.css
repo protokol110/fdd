@@ -1,0 +1,13 @@
+.demo-editor-custom {
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  margin-bottom: 5px;
+  min-height: 300px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.rtFontColor a {
+  color: black;
+  text-decoration: none;
+}

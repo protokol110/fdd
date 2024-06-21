@@ -1,0 +1,28 @@
+.main_block {
+  background-image: url(../assets/logo/main.png);
+  box-sizing: border-box;
+  min-height: Calc(100vh - 155px);
+  padding-bottom: 54px;
+}
+
+.main_part {
+  display: flex;
+  flex-direction: row;
+  width: 84%;
+  margin: 0 auto;
+  background-color: white;
+  padding-left: 10px;
+  box-sizing: border-box;
+  min-height: Calc(100vh - 209px);
+}
+
+.main_part_main {
+  width: 85%;
+}
+
+.main_part_right {
+  width: 13%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

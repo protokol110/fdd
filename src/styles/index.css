@@ -1,0 +1,66 @@
+@import "./header.css";
+@import "./main.css";
+@import "./footer.css";
+@import "./rightSidePanel.css";
+@import "./table.css";
+@import "./dep.css";
+@import "./posts.css";
+@import "./auth.css";
+@import "./rtEditor.css";
+@import "./structDep.css";
+
+.vert {
+  max-width: 1px;
+  background-color: lightgray;
+  padding-right: 0px;
+  padding-left: 0px;
+  margin-left: 7px;
+  margin-right: 7px;
+}
+
+.horiz {
+  border-top: 1px double lightgray;
+  margin-bottom: 5px;
+  margin-right: 0px;
+}
+
+.body {
+  height: 100%;
+  font-family: "Roboto";
+}
+
+.bread_link {
+  text-decoration: none;
+  color: #04734b;
+  font-size: 18px;
+  max-width: 350px;
+  text-align: center;
+}
+
+.bread_link:hover {
+  color: #00c77f;
+}
+
+.bread_link:active {
+  color: #00c77f;
+}
+
+.button_action {
+  font-family: "Roboto" !important;
+}
+
+.loader_center {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+table.domino-table tbody,
+td,
+tfoot,
+th,
+thead,
+tr {
+  border-width: 1px;
+}

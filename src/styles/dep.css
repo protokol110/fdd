@@ -1,0 +1,49 @@
+.logoDep_block {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.logoDep_card {
+    background-color: #8ccc63;
+    color: white;
+    text-align: center;
+    width: 170px;
+    margin-right: 20px;
+}
+
+.logoDep_card:hover {
+    background-color: #aae287;
+    cursor: pointer;
+}
+
+.logoDep_card_logo {
+    min-height: 150px;
+}
+
+.logoDep_card_text {
+    min-height: 150px;
+    font-weight: bold;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.logoDep_card_logo_img {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 120px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.dep_blockAbout {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.dep_blockAbout_text {
+    font-size: 20px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
