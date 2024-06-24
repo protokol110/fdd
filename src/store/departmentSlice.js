@@ -4,9 +4,14 @@ import {getRuDate} from "../utils/utils";
 
 const initialState = {
   loading: false,
-  error: { show: false, text: "" },
-  uprs: [],
-  dep: {},
+  error: {show: false, text: ""},
+  uprs: [
+    {
+      id: 'cybersecurity',
+      nameUpravlen: 'Центр кибербезопасности',
+      textUpravlen: '',
+    }],
+  dep: [],
   about: {
     id: null,
     name: "",
@@ -26,25 +31,49 @@ const initialState = {
   dataActive: 1,
 };
 
+const fetchAll = async (url, dispatch, action) => {
+  try {
+    const res = await instance.get(url);
+    dispatch(action(res.data));
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const handleAsyncStates = (state, action) => {
+  if (action.pending) {
+    state.loading = true;
+    state.error = {show: false, text: ""};
+  } else if (action.fulfilled) {
+    state.loading = false;
+  } else if (action.rejected) {
+    state.loading = false;
+    state.error.show = true;
+    state.error.text = action.payload;
+  }
+};
+
 export const getAllUpr = createAsyncThunk(
   "department/getAllUpr",
-  async function (_, { dispatch, rejectWithValue }) {
-    try {
-      const res = await instance.get("/upravlen/all");
-      dispatch(setUprs(res.data));
-      return res.data;
-    } catch (error) {
-      return rejectWithValue(error);
-    }
+  async (_, {dispatch, rejectWithValue}) => {
+    return fetchAll("upravlen/all", dispatch, setUprs).catch(rejectWithValue);
   }
 );
 
 export const getAllOrder = createAsyncThunk(
   "department/getAllOrder",
-  async function (_, { dispatch, rejectWithValue }) {
+  async (_, {dispatch, rejectWithValue}) => {
+    return fetchAll("documabout/all", dispatch, setOrders).catch(rejectWithValue);
+  }
+);
+
+export const getAllDeport = createAsyncThunk(
+  "department/getAllDeport",
+  async (_, {rejectWithValue}) => {
     try {
-      const res = await instance.get("/documabout/all");
-      dispatch(setOrders(res.data));
+      const res = await instance.get("deport/all");
+      console.log(res)
       return res.data;
     } catch (error) {
       return rejectWithValue(error);
@@ -52,14 +81,13 @@ export const getAllOrder = createAsyncThunk(
   }
 );
 
-
 export const getDeportById = createAsyncThunk(
   "department/getDeportById",
-  async function (id, { dispatch, rejectWithValue }) {
+  async function (id, {dispatch, rejectWithValue}) {
     try {
       const res = await instance.get(`/deport/${id}`);
       let data = res.data;
-      data = { ...data, type: "dep" };
+      data = {...data, type: "dep"};
       dispatch(setDep(data));
       dispatch(setAbout(data));
       return res.data;
@@ -71,7 +99,7 @@ export const getDeportById = createAsyncThunk(
 
 export const postNewOrder = createAsyncThunk(
   "department/postNewOrder",
-  async function ({ files, values }, { dispatch, rejectWithValue, getState }) {
+  async function ({files, values}, {dispatch, rejectWithValue, getState}) {
     try {
       let formData = new FormData();
 
@@ -101,10 +129,9 @@ export const postNewOrder = createAsyncThunk(
 );
 
 
-
 export const getTelSpr = createAsyncThunk(
   "department/getTelSpr",
-  async function (_, { dispatch, rejectWithValue }) {
+  async function (_, {dispatch, rejectWithValue}) {
     try {
       const res = await instance.get("/upravlen/structure");
       dispatch(setTelSprData(res.data));
@@ -117,7 +144,7 @@ export const getTelSpr = createAsyncThunk(
 
 export const delDepInfo = createAsyncThunk(
   "department/delDepInfo",
-  async function ({ id, path }, { dispatch, rejectWithValue }) {
+  async function ({id, path}, {dispatch, rejectWithValue}) {
     let apiPath;
     switch (path) {
       case "/order":
@@ -149,7 +176,7 @@ export const delDepInfo = createAsyncThunk(
 
 export const putAbout = createAsyncThunk(
   "department/putAbout",
-  async function (values, { dispatch, rejectWithValue, getState }) {
+  async function (values, {dispatch, rejectWithValue, getState}) {
     try {
       let res;
       let formData = new FormData();
@@ -240,91 +267,35 @@ const departmentSlice = createSlice({
       state.error.text = "";
     },
   },
-  extraReducers: {
-    [getAllUpr.pending]: (state) => {
-      state.loading = true;
-      state.error = { show: false, text: "" };
-    },
-    [getAllUpr.fulfilled]: (state) => {
-      state.loading = false;
-    },
-    [getAllUpr.rejected]: (state, action) => {
-      state.loading = false;
-      state.error.show = true;
-      state.error.text = action.payload;
-    },
-    [getAllOrder.pending]: (state) => {
-      state.loading = true;
-      state.error = { show: false, text: "" };
-    },
-    [getAllOrder.fulfilled]: (state) => {
-      state.loading = false;
-    },
-    [getAllOrder.rejected]: (state, action) => {
-      state.loading = false;
-      state.error.show = true;
-      state.error.text = action.payload;
-    },
-    [getDeportById.pending]: (state) => {
-      state.loading = true;
-      state.error = { show: false, text: "" };
-    },
-    [getDeportById.fulfilled]: (state) => {
-      state.loading = false;
-    },
-    [getDeportById.rejected]: (state, action) => {
-      state.loading = false;
-      state.error.show = true;
-      state.error.text = action.payload;
-    },
-    [postNewOrder.pending]: (state) => {
-      state.loading = true;
-      state.error = { show: false, text: "" };
-    },
-    [postNewOrder.fulfilled]: (state) => {
-      state.loading = false;
-    },
-    [postNewOrder.rejected]: (state, action) => {
-      state.loading = false;
-      state.error.show = true;
-      state.error.text = action.payload;
-    },
-    [getTelSpr.pending]: (state) => {
-      state.loading = true;
-      state.error = { show: false, text: "" };
-    },
-    [getTelSpr.fulfilled]: (state) => {
-      state.loading = false;
-    },
-    [getTelSpr.rejected]: (state, action) => {
-      state.loading = false;
-      state.error.show = true;
-      state.error.text = action.payload;
-    },
-    [delDepInfo.pending]: (state) => {
-      state.loading = true;
-      state.error = { show: false, text: "" };
-    },
-    [delDepInfo.fulfilled]: (state) => {
-      state.loading = false;
-    },
-    [delDepInfo.rejected]: (state, action) => {
-      state.loading = false;
-      state.error.show = true;
-      state.error.text = action.payload;
-    },
-    [putAbout.pending]: (state) => {
-      state.loading = true;
-      state.error = { show: false, text: "" };
-    },
-    [putAbout.fulfilled]: (state) => {
-      state.loading = false;
-    },
-    [putAbout.rejected]: (state, action) => {
-      state.loading = false;
-      state.error.show = true;
-      state.error.text = action.payload;
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getAllUpr.pending, handleAsyncStates)
+      .addCase(getAllUpr.fulfilled, handleAsyncStates)
+      .addCase(getAllUpr.rejected, handleAsyncStates)
+      .addCase(getAllOrder.pending, handleAsyncStates)
+      .addCase(getAllOrder.fulfilled, handleAsyncStates)
+      .addCase(getAllOrder.rejected, handleAsyncStates)
+      .addCase(getAllDeport.pending, handleAsyncStates)
+      .addCase(getAllDeport.fulfilled, (state, action) => {
+        state.loading = false;
+        state.dep = action.payload;
+      })
+      .addCase(getAllDeport.rejected, handleAsyncStates)
+      .addCase(getDeportById.pending, handleAsyncStates)
+      .addCase(getDeportById.fulfilled, handleAsyncStates)
+      .addCase(getDeportById.rejected, handleAsyncStates)
+      .addCase(postNewOrder.pending, handleAsyncStates)
+      .addCase(postNewOrder.fulfilled, handleAsyncStates)
+      .addCase(postNewOrder.rejected, handleAsyncStates)
+      .addCase(getTelSpr.pending, handleAsyncStates)
+      .addCase(getTelSpr.fulfilled, handleAsyncStates)
+      .addCase(getTelSpr.rejected, handleAsyncStates)
+      .addCase(delDepInfo.pending, handleAsyncStates)
+      .addCase(delDepInfo.fulfilled, handleAsyncStates)
+      .addCase(delDepInfo.rejected, handleAsyncStates)
+      .addCase(putAbout.pending, handleAsyncStates)
+      .addCase(putAbout.fulfilled, handleAsyncStates)
+      .addCase(putAbout.rejected, handleAsyncStates);
   },
 });
 

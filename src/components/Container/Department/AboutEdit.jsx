@@ -36,7 +36,7 @@ const AboutEdit = () => {
       validationSchema={SignupSchema}
       onSubmit={(values) => {
         dispatch(putAbout(values));
-        navigate(`/department`);
+        navigate(`/contacts`);
       }}
     >
       {({
@@ -48,7 +48,7 @@ const AboutEdit = () => {
           handleSubmit,
         }) => (
         <Form onSubmit={handleSubmit}>
-          <FormGroup className="mb-3">
+          <FormGroup classNaфme="mb-3">
             <FormLabel>Описание подразделения</FormLabel>
             <FormControl
               as="textarea"

@@ -3,7 +3,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 
 import {Button} from "react-bootstrap";
-import {Icon} from "@iconify/react";
 
 import {
   getDeportById,
@@ -26,9 +25,7 @@ const AboutDep = () => {
     dispatch(getAllUpr());
   }, [dispatch]);
 
-  const handleEdit = () => {
-    navigate(`/about/edit`);
-  };
+
   const handleCreate = () => {
     navigate(`/contacts/create`);
   };
@@ -50,11 +47,10 @@ const AboutDep = () => {
           {visibleAdmin || visibleEditor ? (
             <div>
               <Button variant="success" onClick={handleCreate}>
-                Добавить
+                Добавить департамент
               </Button>
             </div>
           ) : null}
-          <div className="dep_blockAbout_text">{about.text || null}</div>
         </div>
       </div>
     </div>
@@ -71,6 +67,8 @@ const AboutDep = () => {
       />
     );
   if (loading) return <Loader/>;
+
+  console.log(about)
   return content;
 };
 
