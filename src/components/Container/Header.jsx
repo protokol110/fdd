@@ -5,7 +5,6 @@ import {changeCategory} from "../../store/mainSlice";
 import {changeSearch, changeSearchStatus} from "../../store/postSlice";
 
 import LogoTop from "../../assets/logo/header-toprow-belarusbank.png";
-import LogoBot from "../../assets/logo/header-botrow-belarusbank.png";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -52,9 +51,6 @@ const Header = () => {
 
       <div className="header_botrow">
         <div className="header_botrow_logo">
-          <Link to="/">
-            <Image className="mx-3" src={LogoBot}/>
-          </Link>
         </div>
 
         <Navbar>

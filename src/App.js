@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import {Navigate, Route, Routes} from "react-router-dom";
 
 import NotFoundPage from "./components/Container/NotFound/NotFound";
 import MainPagePosts from "./components/Container/Main/MainPagePosts";
@@ -11,10 +11,9 @@ import LPANew from "./components/Container/Normative/LPANew";
 import UsefulBlock from "./components/Container/Normative/UsefulBlock";
 import UsefulNew from "./components/Container/Normative/UsefulNew";
 import AboutDep from "./components/Container/Department/AboutDep";
-import AboutEdit from "./components/Container/Department/AboutEdit";
+import CreateDeport from "./components/Container/Department/CreateDeport";
 import OrderDep from "./components/Container/Department/OrderDep";
 import OrderNew from "./components/Container/Department/OrderNew";
-import StructDep from "./components/Container/Department/StructDep";
 import PostsBlock from "./components/Container/Posts/PostsBlock";
 import PostsArhBlock from "./components/Container/Posts/PostsArhBlock";
 import PostSearchBlock from "./components/Container/Posts/PostSearchBlock";
@@ -26,52 +25,84 @@ import ReportNew from "./components/Container/Report/ReportNew";
 import ReportEdit from "./components/Container/Report/ReportEdit";
 import AuthPage from "./components/Container/Auth/AuthPage";
 import TokenService from "./services/token.service";
+import EditDep from "./components/Container/Department/EditDep";
+import EmployeeList from "./components/Container/Department/User/EmployeeList";
+import ListLinks from "./components/Container/Links/ListLinks";
+import EditLinks from "./components/Container/Links/EditLinks";
+import LinkNew from "./components/Container/Links/LinkNew";
 
-function RequireAuth({ children, redirectTo }) {
+function RequireAuth({children, redirectTo}) {
   const isAuth =
     TokenService.isHaveRole("ROLE_ADMIN") ||
     TokenService.isHaveRole("ROLE_EDITOR");
-  return isAuth ? children : <Navigate to={redirectTo} />;
+  return isAuth ? children : <Navigate to={redirectTo}/>;
 }
 
 function App() {
   return (
     <div className="body">
-      <Header />
+      <Header/>
       <div className="main_block">
         <div className="main_part">
           <div className="main_part_main">
             <Routes>
-              <Route path="/" element={<MainPagePosts />} />
-              <Route path="/search" element={<PostSearchBlock />} />
+              <Route path="/" element={<MainPagePosts/>}/>
+              <Route path="/search" element={<PostSearchBlock/>}/>
 
-              <Route path="contacts" element={<AboutDep />} />
+              <Route path="contacts" element={<AboutDep/>}/>
               <Route
                 path="contacts/create"
                 element={
                   <RequireAuth redirectTo="/contacts">
-                    <AboutEdit />
+                    <CreateDeport/>
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="departments/:id/employee"
+                element={
+                  <RequireAuth redirectTo="/contacts">
+                    <EditDep/>
+                  </RequireAuth>
+                }
+              />
+              <Route path="/departments/:departmentId/employees" element={<EmployeeList/>}/>
+              <Route path="/links" element={<ListLinks/>}/>
+
+              <Route
+                path="links/edit/:id"
+                element={
+                  <RequireAuth redirectTo="/links">
+                    <EditLinks/>
                   </RequireAuth>
                 }
               />
 
-              <Route path="order" element={<OrderDep />} />
+              <Route
+                path="links/new"
+                element={
+                  <RequireAuth redirectTo="/links">
+                    <LinkNew/>
+                  </RequireAuth>
+                }
+              />
+
+              <Route path="order" element={<OrderDep/>}/>
               <Route
                 path="order/new"
                 element={
                   <RequireAuth redirectTo="/order">
-                    <OrderNew />
+                    <OrderNew/>
                   </RequireAuth>
                 }
               />
-              <Route path="struct" element={<StructDep />} />
-              <Route path="posts" element={<PostsBlock />} />
-              <Route path="posts/:id" element={<PostMain />} />
+              <Route path="posts" element={<PostsBlock/>}/>
+              <Route path="posts/:id" element={<PostMain/>}/>
               <Route
                 path="posts/new"
                 element={
                   <RequireAuth redirectTo="/posts">
-                    <PostNew />
+                    <PostNew/>
                   </RequireAuth>
                 }
               />
@@ -79,45 +110,45 @@ function App() {
                 path="posts/edit/:id"
                 element={
                   <RequireAuth redirectTo="/posts">
-                    <PostEdit />
+                    <PostEdit/>
                   </RequireAuth>
                 }
               />
-              <Route path="actual" element={<PostsBlock />} />
-              <Route path="arh" element={<PostsArhBlock />} />
-              <Route path="educ" element={<NPABlock />} />
-              <Route
-                path="educ/new"
-                element={
-                  <RequireAuth redirectTo="/educ">
-                    <NPANew />
-                  </RequireAuth>
-                }
-              />
-              <Route path="playbook" element={<DocumentsBlock />} />
-              <Route
-                path="playbook/new"
-                element={
-                  <RequireAuth redirectTo="/playbook">
-                    <LPANew />
-                  </RequireAuth>
-                }
-              />
-              <Route path="documents" element={<UsefulBlock />} />
+              <Route path="actual" element={<PostsBlock/>}/>
+              <Route path="arh" element={<PostsArhBlock/>}/>
+              <Route path="documents" element={<NPABlock/>}/>
               <Route
                 path="documents/new"
                 element={
                   <RequireAuth redirectTo="/documents">
-                    <UsefulNew />
+                    <LPANew/>
                   </RequireAuth>
                 }
               />
-              <Route path="report" element={<ReportBlock />} />
+              <Route path="playbook" element={<DocumentsBlock/>}/>
+              <Route
+                path="playbook/new"
+                element={
+                  <RequireAuth redirectTo="/playbook">
+                    <NPANew/>
+                  </RequireAuth>
+                }
+              />
+              <Route path="educ" element={<UsefulBlock/>}/>
+              <Route
+                path="educ/new"
+                element={
+                  <RequireAuth redirectTo="/educ">
+                    <UsefulNew/>
+                  </RequireAuth>
+                }
+              />
+              <Route path="report" element={<ReportBlock/>}/>
               <Route
                 path="report/new"
                 element={
                   <RequireAuth redirectTo="/report">
-                    <ReportNew />
+                    <ReportNew/>
                   </RequireAuth>
                 }
               />
@@ -125,19 +156,19 @@ function App() {
                 path="report/edit/:id"
                 element={
                   <RequireAuth redirectTo="/report">
-                    <ReportEdit />
+                    <ReportEdit/>
                   </RequireAuth>
                 }
               />
-              <Route path="auth" element={<AuthPage />} />
-              <Route path="*" element={<NotFoundPage />} />
+              <Route path="auth" element={<AuthPage/>}/>
+              <Route path="*" element={<NotFoundPage/>}/>
             </Routes>
           </div>
 
         </div>
       </div>
 
-      <Footer />
+      <Footer/>
     </div>
   );
 }

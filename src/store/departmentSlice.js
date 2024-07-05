@@ -12,6 +12,8 @@ const initialState = {
       textUpravlen: '',
     }],
   dep: [],
+  depAll: [],
+  successDep: false,
   about: {
     id: null,
     name: "",
@@ -29,6 +31,7 @@ const initialState = {
     podrs: [],
   },
   dataActive: 1,
+  selectedDepartment: "",
 };
 
 const fetchAll = async (url, dispatch, action) => {
@@ -70,13 +73,12 @@ export const getAllOrder = createAsyncThunk(
 
 export const getAllDeport = createAsyncThunk(
   "department/getAllDeport",
-  async (_, {rejectWithValue}) => {
+  async () => {
     try {
-      const res = await instance.get("deport/all");
-      console.log(res)
+      const res = await instance.get(`deport/allfull`);
       return res.data;
     } catch (error) {
-      return rejectWithValue(error);
+      console.log(error);
     }
   }
 );
@@ -96,6 +98,52 @@ export const getDeportById = createAsyncThunk(
     }
   }
 );
+
+export const createDeport = createAsyncThunk(
+  "department/CreateNewDeport",
+  async ({nameDeport, textDeport}) => {
+    try {
+      const data = {
+        nameDeport,
+        textDeport
+      };
+      const response = await instance.post(`create/deport`, data);
+      return response.data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+)
+
+
+export const updateDeport = createAsyncThunk(
+  "department/UpdateDeport",
+  async ({id, name, description}) => {
+    try {
+      const data = {
+        id: id,
+        nameDeport: name,
+        textDeport: description
+      };
+      await instance.put(`edit/deport`, data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+)
+
+export const deleteDeport = createAsyncThunk(
+  "department/DeleteDeport",
+  async (id, { getState }) => {
+    try {
+
+      await instance.delete(`delete/deport/${id}`);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+)
+
 
 export const postNewOrder = createAsyncThunk(
   "department/postNewOrder",
@@ -119,7 +167,6 @@ export const postNewOrder = createAsyncThunk(
         },
       });
 
-      // dispatch(clearOrder());
       dispatch(getAllOrder());
       return res.data;
     } catch (error) {
@@ -266,6 +313,9 @@ const departmentSlice = createSlice({
       state.error.show = false;
       state.error.text = "";
     },
+    selectDepartment: (state, action) => {
+      state.selectedDepartment = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -278,7 +328,7 @@ const departmentSlice = createSlice({
       .addCase(getAllDeport.pending, handleAsyncStates)
       .addCase(getAllDeport.fulfilled, (state, action) => {
         state.loading = false;
-        state.dep = action.payload;
+        state.depAll = action.payload;
       })
       .addCase(getAllDeport.rejected, handleAsyncStates)
       .addCase(getDeportById.pending, handleAsyncStates)
@@ -293,6 +343,12 @@ const departmentSlice = createSlice({
       .addCase(delDepInfo.pending, handleAsyncStates)
       .addCase(delDepInfo.fulfilled, handleAsyncStates)
       .addCase(delDepInfo.rejected, handleAsyncStates)
+      .addCase(createDeport.pending, handleAsyncStates)
+      .addCase(createDeport.fulfilled, handleAsyncStates)
+      .addCase(createDeport.rejected, handleAsyncStates)
+      .addCase(updateDeport.pending, handleAsyncStates)
+      .addCase(updateDeport.fulfilled, handleAsyncStates)
+      .addCase(updateDeport.rejected, handleAsyncStates)
       .addCase(putAbout.pending, handleAsyncStates)
       .addCase(putAbout.fulfilled, handleAsyncStates)
       .addCase(putAbout.rejected, handleAsyncStates);
@@ -305,11 +361,10 @@ export const {
   setAbout,
   changeAbout,
   setOrders,
-  setVacancies,
   setTelSprData,
   setTelSprActive,
-  setDataActive,
   setError,
   clearError,
+  selectDepartment,
 } = departmentSlice.actions;
 export default departmentSlice.reducer;

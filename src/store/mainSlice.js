@@ -33,9 +33,9 @@ const initialState = {
       label: "Нормативно-методологический блок",
       link: "/educ",
       children: [
-        {id: 1, label: "Материалы обучения", link: "/educ"},
+        {id: 1, label: "Документы...", link: "/documents"},
         {id: 2, label: "SOC playbook", link: "/playbook"},
-        {id: 3, label: "Документы...", link: "/documents"},
+        {id: 3, label: "Материалы обучения", link: "/educ"},
       ],
     },
     {

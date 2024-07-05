@@ -4,6 +4,8 @@ import normativeSlice from "./normativeSlice";
 import departmentSlice from "./departmentSlice";
 import postSlice from "./postSlice";
 import reportSlice from "./reportSlice";
+import userSlice from "./userSlice";
+import linksSlice from "./linksSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,5 +14,7 @@ export const store = configureStore({
     department: departmentSlice,
     post: postSlice,
     report: reportSlice,
+    user: userSlice,
+    links: linksSlice
   },
 });

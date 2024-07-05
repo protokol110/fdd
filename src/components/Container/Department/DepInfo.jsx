@@ -1,58 +1,79 @@
-import {TreeItem, TreeView} from "@mui/lab";
+import React, {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
+import {TreeItem, TreeView} from "@mui/lab";
 import {Icon} from "@iconify/react";
+import {useNavigate} from "react-router-dom";
 
-import {changeAbout, getAllDeport} from "../../../store/departmentSlice";
+import {getAllDeport, selectDepartment} from "../../../store/departmentSlice";
+import Loader from "../../Present/Loader";
 
 const DepInfo = () => {
-  const data = useSelector((state) => state.department.dataAbout);
-  const departments = useSelector((state) => state.department);
-
+  const departments = useSelector((state) => state.department.depAll);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const handleSelect = (_, id) => {
-    dispatch(changeAbout({payload: id, type: "upr"}));
-    dispatch(getAllDeport());
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    dispatch(getAllDeport()).then(() => {
+      setLoading(false);
+    });
+  }, [dispatch]);
+
+  const handleItemClick = (id) => {
+    navigate(`/departments/${id}/employee`);
   };
+
+  const handleCybersecurityClick = () => {
+    dispatch(selectDepartment("cybersecurity"));
+  };
+
 
   const renderTree = (nodes) => {
-    if (!nodes || nodes.id === null) {
-      return null; // Возвращает null, если nodes не определено или nodes.id равно null
-    }
+    return nodes.map((node) => {
+      return (
+        <TreeItem
+          key={node.id}
+          nodeId={node.id.toString()}
+          label={node.nameDeport}
+          className="sctruct_dep_tree_item"
+          onClick={() => handleItemClick(node.id)}
+        >
 
-    return (
-      <TreeItem
-        key={nodes.id}
-        nodeId={nodes.id.toString()} // Преобразование id в строку
-        label={nodes.name}
-        className="sctruct_dep_tree_item"
-      >
-        {Array.isArray(nodes.podrs)
-          ? nodes.podrs.map((node) => renderTree(node))
-          : null}
-      </TreeItem>
-    );
+        </TreeItem>
+      );
+    });
   };
+
+  const allIds = departments.reduce((ids, department) => {
+    ids.push(department.id.toString());
+    department.users.forEach((user) => ids.push(user.id.toString()));
+    return ids;
+  }, []);
+
+  if (loading) {
+    return <Loader/>;
+  }
 
   return (
     <TreeView
       aria-label="tel spr"
       defaultExpandIcon={<Icon icon="material-symbols:keyboard-arrow-right"/>}
       defaultCollapseIcon={<Icon icon="material-symbols:keyboard-arrow-down"/>}
-      onNodeSelect={handleSelect}
       expanded={["1"]}
       defaultSelected={["1"]}
       className="struct_dep_tree"
+      defaultExpanded={allIds}
     >
       <TreeItem
         key="cybersecurity"
         nodeId="cybersecurity"
         label="Центр кибербезопасности"
         className="sctruct_dep_tree_item"
+        onClick={handleCybersecurityClick}
       />
-      {renderTree(data)}
+      {renderTree(departments)}
     </TreeView>
   );
-
 };
 
 export default DepInfo;

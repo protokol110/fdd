@@ -5,9 +5,9 @@ import {useNavigate} from "react-router-dom";
 import {Button} from "react-bootstrap";
 
 import {
-  getDeportById,
   getAllUpr,
   clearError,
+  selectDepartment
 } from "../../../store/departmentSlice";
 import TokenService from "../../../services/token.service";
 
@@ -19,20 +19,20 @@ import ModalError from "../../Modals/ModalError";
 const AboutDep = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const selectedDepartment = useSelector((state) => state.department.selectedDepartment);
 
   useEffect(() => {
-    dispatch(getDeportById(process.env.REACT_APP_DEP_ID));
+
     dispatch(getAllUpr());
   }, [dispatch]);
 
-
   const handleCreate = () => {
+    dispatch(selectDepartment(""));
     navigate(`/contacts/create`);
   };
 
   const loading = useSelector((state) => state.department.loading);
   const error = useSelector((state) => state.department.error);
-  const about = useSelector((state) => state.department.about);
   const visibleAdmin = TokenService.isHaveRole("ROLE_ADMIN");
   const visibleEditor = TokenService.isHaveRole("ROLE_EDITOR");
 
@@ -44,7 +44,7 @@ const AboutDep = () => {
         <DepInfo/>
 
         <div className="dep_blockAbout">
-          {visibleAdmin || visibleEditor ? (
+          {(visibleAdmin || visibleEditor) && selectedDepartment === "cybersecurity" ? (
             <div>
               <Button variant="success" onClick={handleCreate}>
                 Добавить департамент
@@ -67,8 +67,6 @@ const AboutDep = () => {
       />
     );
   if (loading) return <Loader/>;
-
-  console.log(about)
   return content;
 };
 

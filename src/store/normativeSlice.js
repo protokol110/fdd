@@ -74,7 +74,7 @@ export const postNewNPA = createAsyncThunk(
       formData.append("nameDocument", values.nameDocument);
       formData.append("dateUtv", getRuDate(values.dateUtv));
 
-      const res = await instance.post("/create/documnormativ", formData, {
+      const res = await instance.post("/create/documlocal", formData, {
         headers: {
           "Content-type": "multipart/form-data",
         },
@@ -104,7 +104,7 @@ export const postNewLPA = createAsyncThunk(
       formData.append("nameDocument", values.nameDocument);
       formData.append("dateUtv", getRuDate(values.dateUtv));
 
-      const res = await instance.post("/create/documlocal", formData, {
+      const res = await instance.post("/create/documnormativ", formData, {
         headers: {
           "Content-type": "multipart/form-data",
         },
@@ -154,7 +154,7 @@ export const delNormative = createAsyncThunk(
     let apiPath;
     switch (path) {
       case "/educ":
-        apiPath = "documnormativ";
+        apiPath = "useful";
         break;
       case "/normative":
         apiPath = "documnormativ";
@@ -163,7 +163,7 @@ export const delNormative = createAsyncThunk(
         apiPath = "documlocal";
         break;
       case "/documents":
-        apiPath = "useful";
+        apiPath = "documnormativ";
         break;
       default:
         break;

@@ -24,7 +24,7 @@ const PostsArhBlock = () => {
   useEffect(() => {
     dispatch(
       getArhPostsByDesc({
-        isInitial: postsArhYears.length === 0 ? true : false,
+        isInitial: postsArhYears.length === 0,
       })
     );
   }, [dispatch, currPage, currArhYear, postsArhYears]);

@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {getTop6Posts, clearError} from "../../../store/postSlice";
 import Loader from "../../Present/Loader";

@@ -1,15 +1,48 @@
-import {useEffect, useState, useRef} from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
 import {Editor} from "@tinymce/tinymce-react";
 import * as Yup from "yup";
 import {Button, FormControl, FormGroup, FormLabel} from "react-bootstrap";
-import {Formik, Form, ErrorMessage} from "formik";
+import {ErrorMessage, Form, Formik} from "formik";
 
-import {getPostByID, editPost, clearError} from "../../../store/postSlice";
+import {clearError, editPost, getPostByID} from "../../../store/postSlice";
 import Loader from "../../Present/Loader";
 import ModalError from "../../Modals/ModalError";
 import instance from "../../../services/http.service";
+
+const configValue = {
+  language: "ru",
+  height: 700,
+  plugins: [
+    "advlist",
+    "autolink",
+    "autosave",
+    "directionality",
+    "lists",
+    "link",
+    "image",
+    "charmap",
+    "preview",
+    "anchor",
+    "searchreplace",
+    "code",
+    "fullscreen",
+    "insertdatetime",
+    "media",
+    "table",
+    "help",
+  ],
+  toolbar:
+    "undo redo | blocks | " +
+    "bold italic backcolor | alignleft aligncenter " +
+    "alignright alignjustify | bullist numlist outdent indent | " +
+    "removeformat | help",
+  content_style:
+    "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+  images_upload_url: "http://uedweb.asb.by/bezop-api/v1/fileurl",
+  automatic_uploads: true,
+};
 
 const PostEdit = () => {
   const dispatch = useDispatch();
@@ -23,55 +56,13 @@ const PostEdit = () => {
     dispatch(getPostByID(id));
   }, [dispatch, id]);
 
-  const configValue = {
-    language: "ru",
-    // language_url: "/langs/ru.js",
-    // init_instance_callback: function (editor) {
-    //   var freeTiny = document.querySelector(".tox .tox-notification--in");
-    //   freeTiny.style.display = "none";
-    // },
-    height: 700,
-    plugins: [
-      "advlist",
-      "autolink",
-      "autosave",
-      "directionality",
-      "lists",
-      "link",
-      "image",
-      "charmap",
-      "preview",
-      "anchor",
-      "searchreplace",
-      // "visualblocks",
-      "code",
-      "fullscreen",
-      "insertdatetime",
-      "media",
-      "table",
-      "help",
-      // "wordcount",
-    ],
-    toolbar:
-      "undo redo | blocks | " +
-      "bold italic backcolor | alignleft aligncenter " +
-      "alignright alignjustify | bullist numlist outdent indent | " +
-      "removeformat | help",
-    content_style:
-      "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
-    images_upload_url: "http://uedweb.asb.by/fed-api/v1/fileurl",
-    automatic_uploads: true,
-    images_upload_handler: imageUploaderHandler,
-    // file_picker_callback: (callback, value, meta) => {},
-  };
-
-  async function imageUploaderHandler(blobInfo) {
+  configValue.images_upload_handler = useCallback(async (blobInfo) => {
     let formData = new FormData();
     formData.append("files", blobInfo.blob(), blobInfo.filename());
 
     try {
       const res = await instance.post(
-        "http://uedweb.asb.by/fed-api/v1/fileurl",
+        "http://uedweb.asb.by/bezop-api/v1/fileurl",
         formData,
         {
           headers: {
@@ -88,7 +79,7 @@ const PostEdit = () => {
     } catch (err) {
       throw new Error("Невозможно загрузить изображение");
     }
-  }
+  }, []);
 
   const loading = useSelector((state) => state.post.loading);
   const error = useSelector((state) => state.post.error);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
@@ -12,40 +12,44 @@ import {clearError, setError} from "../../../store/mainSlice";
 
 import ModalError from "../../Modals/ModalError";
 
+const SignupSchema = Yup.object().shape({
+  username: Yup.string()
+    .length(9, "Имя пользователя вводится в формате b12345678")
+    .required(`Поле "Логин" обязательно для заполнения`),
+  password: Yup.string().required(`Поле "Пароль" обязательно для заполнения`),
+});
+
+async function login(values, navigate, dispatch) {
+  try {
+    let data = {
+      tbn: values.username,
+      password: values.password,
+      site: `${process.env.REACT_APP_SITE_NAME}`,
+    };
+
+    return await axios
+      .post(`${process.env.REACT_APP_HTTP_URL}/login`, data)
+      .then((response) => {
+        TokenService.setAccessToken(response.data.token);
+        TokenService.setUser(atob(response.data.token.split(".")[1]));
+        navigate(`/`);
+      });
+  } catch (err) {
+    if (err.response.data === "Ошибка аутентификации в AD") {
+      dispatch(setError("Введен неверный логин или пароль!"));
+    }
+  }
+}
+
 const AuthPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const error = useSelector((state) => state.main.error);
 
-  async function login(values) {
-    try {
-      let data = {
-        tbn: values.username,
-        password: values.password,
-        site: `${process.env.REACT_APP_SITE_NAME}`,
-      };
-
-      return await axios
-        .post(`${process.env.REACT_APP_HTTP_URL}/login`, data)
-        .then((response) => {
-          TokenService.setAccessToken(response.data.token);
-          TokenService.setUser(atob(response.data.token.split(".")[1]));
-          navigate(`/posts`);
-        });
-    } catch (err) {
-      if (err.response.data === "Ошибка аутентификации в AD") {
-        dispatch(setError("Введен неверный логин или пароль!"));
-      }
-    }
-  }
-
-  const SignupSchema = Yup.object().shape({
-    username: Yup.string()
-      .length(9, "Имя пользователя вводится в формате b12345678")
-      .required(`Поле "Логин" обязательно для заполнения`),
-    password: Yup.string().required(`Поле "Пароль" обязательно для заполнения`),
-  });
+  const handleClose = useCallback(() => {
+    dispatch(clearError());
+  }, [dispatch]);
 
   let content = (
     <Formik
@@ -55,8 +59,7 @@ const AuthPage = () => {
       }}
       validationSchema={SignupSchema}
       onSubmit={(values) => {
-
-        login(values);
+        login(values, navigate, dispatch);
       }}
     >
       {({
@@ -126,9 +129,7 @@ const AuthPage = () => {
       <ModalError
         show={error.show}
         errText={error.text}
-        handleClose={() => {
-          dispatch(clearError());
-        }}
+        handleClose={handleClose}
       />
     );
   return content;

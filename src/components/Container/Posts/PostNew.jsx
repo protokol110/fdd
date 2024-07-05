@@ -1,74 +1,65 @@
-import React, { useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { Editor } from "@tinymce/tinymce-react";
+import React, {useCallback, useRef, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
+import {Editor} from "@tinymce/tinymce-react";
 import * as Yup from "yup";
-import { Button, FormControl, FormGroup, FormLabel } from "react-bootstrap";
-import { Formik, Form, ErrorMessage } from "formik";
+import {Button, FormControl, FormGroup, FormLabel} from "react-bootstrap";
+import {ErrorMessage, Form, Formik} from "formik";
 
-import { postNewPost, clearError } from "../../../store/postSlice";
+import {clearError, postNewPost} from "../../../store/postSlice";
 import Loader from "../../Present/Loader";
 import ModalError from "../../Modals/ModalError";
 import instance from "../../../services/http.service";
 
+const configValue = {
+  language: "ru",
+  height: 700,
+  plugins: [
+    "advlist",
+    "autolink",
+    "autosave",
+    "directionality",
+    "lists",
+    "link",
+    "image",
+    "charmap",
+    "preview",
+    "anchor",
+    "searchreplace",
+    "visualblocks",
+    "code",
+    "fullscreen",
+    "insertdatetime",
+    "media",
+    "table",
+    "help",
+    "wordcount",
+  ],
+  toolbar:
+    "undo redo | blocks | " +
+    "bold italic backcolor | alignleft aligncenter " +
+    "alignright alignjustify | bullist numlist outdent indent | " +
+    "removeformat | help",
+  content_style:
+    "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+  images_upload_url: "http://uedweb.asb.by/bezop-api/v1/fileurl",
+  automatic_uploads: true,
+};
+
 const PostNew = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const loading = useSelector((state) => state.post.loading);
-  const error = useSelector((state) => state.post.error);
   const editorRef = useRef(null);
   const [editorContent, setEditorContent] = useState();
   const [icon, setIcon] = useState([]);
 
-  const configValue = {
-    language: "ru",
-    // init_instance_callback: function (editor) {
-    //   //var freeTiny = document.querySelector(".tox .tox-notification--in");
-    //   var freeTiny = document.querySelector(".tox .tox-tinymce");
-    //   freeTiny.style.display = "none";
-    // },
-    height: 700,
-    plugins: [
-      "advlist",
-      "autolink",
-      "autosave",
-      "directionality",
-      "lists",
-      "link",
-      "image",
-      "charmap",
-      "preview",
-      "anchor",
-      "searchreplace",
-      "visualblocks",
-      "code",
-      "fullscreen",
-      "insertdatetime",
-      "media",
-      "table",
-      "help",
-      "wordcount",
-    ],
-    toolbar:
-      "undo redo | blocks | " +
-      "bold italic backcolor | alignleft aligncenter " +
-      "alignright alignjustify | bullist numlist outdent indent | " +
-      "removeformat | help",
-    content_style:
-      "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
-    images_upload_url: "http://uedweb.asb.by/fed-api/v1/fileurl",
-    automatic_uploads: true,
-    images_upload_handler: imageUploaderHandler,
-  };
-
-  async function imageUploaderHandler(blobInfo) {
+  configValue.images_upload_handler = useCallback(async (blobInfo) => {
     let formData = new FormData();
     formData.append("files", blobInfo.blob(), blobInfo.filename());
 
     try {
       const res = await instance.post(
-        "http://uedweb.asb.by/fed-api/v1/fileurl",
+        "http://uedweb.asb.by/bezop-api/v1/fileurl",
         formData,
         {
           headers: {
@@ -85,7 +76,10 @@ const PostNew = () => {
     } catch (err) {
       throw new Error("Невозможно загрузить изображение");
     }
-  }
+  }, []);
+
+  const loading = useSelector((state) => state.post.loading);
+  const error = useSelector((state) => state.post.error);
 
   const handleEditorChange = () => {
     if (editorRef.current) {
@@ -125,13 +119,13 @@ const PostNew = () => {
       }}
     >
       {({
-        values,
-        errors,
-        isSubmitting,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-      }) => (
+          values,
+          errors,
+          isSubmitting,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+        }) => (
         <Form onSubmit={handleSubmit}>
           <FormGroup className="mb-3">
             <FormLabel>Иконка новости</FormLabel>
@@ -159,7 +153,7 @@ const PostNew = () => {
             />
 
             <FormControl.Feedback type="invalid">
-              <ErrorMessage name="headline" />
+              <ErrorMessage name="headline"/>
             </FormControl.Feedback>
           </FormGroup>
 
@@ -178,7 +172,7 @@ const PostNew = () => {
             />
 
             <FormControl.Feedback type="invalid">
-              <ErrorMessage name="shortText" />
+              <ErrorMessage name="shortText"/>
             </FormControl.Feedback>
           </FormGroup>
 
@@ -216,7 +210,7 @@ const PostNew = () => {
         }}
       />
     );
-  if (loading) return <Loader />;
+  if (loading) return <Loader/>;
   return content;
 };
 

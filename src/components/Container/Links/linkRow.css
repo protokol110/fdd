@@ -1,0 +1,27 @@
+.link_row {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+
+.link_row_name {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.link_row_body {
+    font-size: 16px;
+    color: #666;
+}
+
+.link_row_body_adv {
+    color: green;
+    text-decoration: none;
+}
+
+.link_row_body_adv:hover {
+    text-decoration: underline;
+}
