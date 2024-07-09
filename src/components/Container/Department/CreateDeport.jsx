@@ -7,18 +7,18 @@ import {Button, FormControl, FormGroup, FormLabel} from "react-bootstrap";
 import {Formik, Form, ErrorMessage} from "formik";
 import Bread from "../Bread";
 
+const SignupSchema = Yup.object().shape({
+  name: Yup.string().required(
+    `Поле "Название подразделения" обязательно для заполнения`
+  ),
+  text: Yup.string().required(
+    `Поле "Описание подразделения" обязательно для заполнения`
+  ),
+});
+
 const CreateDeport = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const SignupSchema = Yup.object().shape({
-    name: Yup.string().required(
-      `Поле "Название подразделения" обязательно для заполнения`
-    ),
-    text: Yup.string().required(
-      `Поле "Описание подразделения" обязательно для заполнения`
-    ),
-  });
 
   return (
     <>

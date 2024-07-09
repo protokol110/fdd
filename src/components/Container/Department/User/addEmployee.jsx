@@ -1,6 +1,6 @@
 import React from "react";
 import {useDispatch} from "react-redux";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {Button, FormControl, FormGroup, FormLabel} from "react-bootstrap";
 import {Formik, Form, ErrorMessage} from "formik";
 import * as Yup from "yup";
@@ -10,6 +10,7 @@ import {createUser} from "../../../../store/userSlice";
 const AddEmployee = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { idDep } = useParams();
 
   const SignupSchema = Yup.object().shape({
     name: Yup.string().required("Имя сотрудника обязательно для заполнения"),
@@ -31,6 +32,7 @@ const AddEmployee = () => {
         phone: "",
         description: "",
         position: "",
+        idDep,
       }}
       validationSchema={SignupSchema}
       onSubmit={handleCreate}

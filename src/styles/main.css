@@ -1,5 +1,5 @@
 .main_block {
-  background-image: url(../assets/logo/main.png);
+  background-image: url(../../public/_02e66512-d78b-4e1e-bf28-cb1ad25eddfa.jpg);
   box-sizing: border-box;
   min-height: Calc(100vh - 155px);
   padding-bottom: 54px;
@@ -10,7 +10,7 @@
   flex-direction: row;
   width: 84%;
   margin: 0 auto;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 1);
   padding-left: 10px;
   box-sizing: border-box;
   min-height: Calc(100vh - 209px);
@@ -25,4 +25,23 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+.background_contacts {
+  background-image: url('../../public/_bd6cd7d4-4e74-4a65-9996-6305de9ea488.jpg');
+}
+
+.background_actual {
+  background-image: url('../../public/_ce228cc3-cd80-48f4-9aa0-80d965bfd345.jpg');
+}
+
+.background_links {
+  background-image: url('../../public/_ec69192e-90cb-4f84-a472-e376ee0e5b4d.jpg');
+}
+
+.background_documents {
+  background-image: url('../../public/_02e66512-d78b-4e1e-bf28-cb1ad25eddfa.jpg');
+}
+
+.background_default {
+  background-image: url('../../public/_acb6a751-3f5c-4262-9bae-bffdf98f655f.jpg');
 }

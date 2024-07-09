@@ -31,8 +31,6 @@ export const getLinks = createAsyncThunk(
   async () => {
     try {
       const res = await instance.get(`links/all`);
-
-      console.log(res.data)
       return res.data;
     } catch (error) {
       console.log(error);

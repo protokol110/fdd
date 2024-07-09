@@ -1,4 +1,4 @@
-import {Navigate, Route, Routes} from "react-router-dom";
+import {Navigate, Route, Routes, useLocation} from "react-router-dom";
 
 import NotFoundPage from "./components/Container/NotFound/NotFound";
 import MainPagePosts from "./components/Container/Main/MainPagePosts";
@@ -30,6 +30,9 @@ import EmployeeList from "./components/Container/Department/User/EmployeeList";
 import ListLinks from "./components/Container/Links/ListLinks";
 import EditLinks from "./components/Container/Links/EditLinks";
 import LinkNew from "./components/Container/Links/LinkNew";
+import AddEmployee from "./components/Container/Department/User/addEmployee";
+import EditEmployee from "./components/Container/Department/User/EditEmployee";
+import RightSidePanel from "./components/Present/RightSidePanel";
 
 function RequireAuth({children, redirectTo}) {
   const isAuth =
@@ -39,17 +42,43 @@ function RequireAuth({children, redirectTo}) {
 }
 
 function App() {
+
+  const location = useLocation();
+
+  let backgroundClass;
+  if (location.pathname === '/contacts'
+    || location.pathname.startsWith('/departments')
+    || location.pathname.startsWith('/employee')) {
+    backgroundClass = 'background_contacts';
+  } else if (location.pathname === '/actual'
+    || location.pathname === '/post'
+    || location.pathname === '/arh'
+    || location.pathname.startsWith('/posts/')) {
+    backgroundClass = 'background_actual';
+  } else if (location.pathname === '/links' || location.pathname.startsWith('/links/edit/')) {
+    backgroundClass = 'background_links';
+  } else if (location.pathname === '/documents'
+    || location.pathname === '/documents/new'
+    || location.pathname === '/playbook'
+    || location.pathname === '/playbook/new'
+    || location.pathname === '/educ'
+    || location.pathname === '/educ/new') {
+    backgroundClass = 'background_documents';
+  } else {
+    backgroundClass = 'background_default';
+  }
+
   return (
     <div className="body">
       <Header/>
-      <div className="main_block">
+      <div className={`main_block ${backgroundClass}`}>
         <div className="main_part">
           <div className="main_part_main">
             <Routes>
               <Route path="/" element={<MainPagePosts/>}/>
               <Route path="/search" element={<PostSearchBlock/>}/>
 
-              <Route path="contacts" element={<AboutDep/>}/>
+              <Route path="/contacts" element={<AboutDep/>}/>
               <Route
                 path="contacts/create"
                 element={
@@ -59,10 +88,27 @@ function App() {
                 }
               />
               <Route
-                path="departments/:id/employee"
+                path="departments/:id/edit"
                 element={
                   <RequireAuth redirectTo="/contacts">
                     <EditDep/>
+                  </RequireAuth>
+                }
+              />
+
+              <Route
+                path="employee/:idDep/add"
+                element={
+                  <RequireAuth redirectTo="/contacts">
+                    <AddEmployee/>
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/employee/:idDep/:idEmp/edit"
+                element={
+                  <RequireAuth redirectTo="/contacts">
+                    <EditEmployee/>
                   </RequireAuth>
                 }
               />
@@ -164,7 +210,7 @@ function App() {
               <Route path="*" element={<NotFoundPage/>}/>
             </Routes>
           </div>
-
+          <RightSidePanel/>
         </div>
       </div>
 
