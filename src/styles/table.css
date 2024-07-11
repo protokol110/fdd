@@ -3,7 +3,7 @@
 }
 
 .table_header_row {
-  background-color: #278f51;
+  background-color: #34606BFF;
   text-align: center;
 }
 
@@ -21,7 +21,7 @@
 .table_body_row_icon {
   font-size: 32px;
   margin: 0 auto;
-  color: #79b169e0;
+  color:  rgb(86, 162, 182);
   cursor: pointer;
 }
 

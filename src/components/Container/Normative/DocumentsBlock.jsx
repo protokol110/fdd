@@ -32,13 +32,14 @@ const DocumentsBlock = () => {
           type="submit"
           className="mb-3"
           onClick={() => navigate(`/playbook/new`)}
+          style={{backgroundColor: "#34606BFF", border: "none"}}
         >
           Добавить
         </Button>
       )}
-      <Table>
+      <Table className="ps-2" style={{backgroundColor: "#34606BFF", border: "none", marginRight:"20px"}}>
         <thead>
-        <TableHeader labels={PAHeaders}/>
+        <TableHeader labels={PAHeaders} />
         </thead>
         <tbody>
         {docs.map((doc) => <TablePARow doc={doc} key={doc.id}/>)}

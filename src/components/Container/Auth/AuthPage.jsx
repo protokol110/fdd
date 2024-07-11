@@ -112,7 +112,7 @@ const AuthPage = () => {
               <Button
                 type="submit"
                 variant="success"
-                className="me-3"
+                className={`me-3 colorNew`}
                 disabled={isSubmitting}
               >
                 Войти

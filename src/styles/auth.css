@@ -1,14 +1,25 @@
 .auth_block {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .auth_block_form {
-  width: 300px;
+    width: 300px;
 }
 
 .auth_block_buttons {
-  text-align: center;
+    text-align: center;
+    padding-bottom: 10px;
+
+}
+
+.colorNew {
+    background-color: rgba(52, 96, 107, 1);
+    border:  none;
+}
+
+.colorNew:hover {
+    background-color: rgba(52, 96, 107, 1);
 }

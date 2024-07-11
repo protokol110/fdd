@@ -71,6 +71,7 @@ const UsefulNew = () => {
             variant="success"
             className="me-3"
             disabled={isSubmitting}
+            style={{backgroundColor: "#34606BFF", border: "none", marginBottom:"10px"}}
           >
             Отправить
           </Button>

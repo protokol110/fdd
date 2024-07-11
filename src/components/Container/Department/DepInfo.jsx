@@ -1,24 +1,22 @@
-import React, {useState, useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {TreeItem, TreeView} from "@mui/lab";
 import {Icon} from "@iconify/react";
-import {useNavigate} from "react-router-dom";
-
-
-import {getAllDeport, selectDepartment} from "../../../store/departmentSlice";
 import Loader from "../../Present/Loader";
+import {getAllDeport, setIdDep} from "../../../store/departmentSlice";
 import {Button} from "react-bootstrap";
+import {Link, useNavigate} from "react-router-dom";
 import TokenService from "../../../services/token.service";
 
 const DepInfo = () => {
   const departments = useSelector((state) => state.department.depAll);
-  const navigate = useNavigate();
+  const idDep = useSelector((state) => state.department.idDep);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
-  const [, setSelectedItem] = useState(null);
   const visibleAdmin = TokenService.isHaveRole("ROLE_ADMIN");
   const visibleEditor = TokenService.isHaveRole("ROLE_EDITOR");
 
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getAllDeport()).then(() => {
@@ -27,11 +25,10 @@ const DepInfo = () => {
   }, [dispatch]);
 
   const handleItemClick = (id) => {
-    setSelectedItem(id);
-    navigate(`/departments/${id}/employees`);
+    dispatch(setIdDep(id));
   };
 
-  const handleCybersecurityClick = () => {
+  const handleCreate = () => {
     navigate(`/contacts/create`);
   };
 
@@ -44,7 +41,7 @@ const DepInfo = () => {
           label={node.nameDeport}
           className="sctruct_dep_tree_item"
           onClick={() => handleItemClick(node.id)}
-          style={{backgroundColor: '#99cba2', color: '#fff'}}>
+        >
         </TreeItem>
       );
     });
@@ -70,18 +67,22 @@ const DepInfo = () => {
         defaultSelected={["1"]}
         className="struct_dep_tree"
         defaultExpanded={allIds}
-      > {(visibleAdmin || visibleEditor) ? (
-        <div>
-          <Button variant="success" onClick={handleCybersecurityClick}>
-            Добавить подразделение
-          </Button>
-        </div>
-      ) : null}
+      >
+        {visibleAdmin || visibleEditor ?
+          <Button variant={"success"} onClick={handleCreate} style={{backgroundColor: "#34606BFF", border: "none"}}>Создать
+            подразделение</Button> : null}
         {renderTree(departments)}
+        {idDep && (visibleAdmin || visibleEditor) &&
+          <>
+            <Button variant="success" onClick={() => navigate(`/employee/${idDep}/add`)} className="struct_marging_top">Добавить
+              сотрудника</Button>
+            <Button variant="success" onClick={() => navigate(`/departments/${idDep}/edit`)} className="struct_marging">Изменить
+              подразделение</Button>
+          </>
+        }
       </TreeView>
     </>
   );
-
 };
 
 export default DepInfo;

@@ -79,6 +79,7 @@ const PostMain = () => {
 
       <div className="post">
         <Button
+          style={{backgroundColor: "#34606BFF", border: "none"}}
           className={visibleAdmin || visibleEditor ? `visually-hidden` : `me-2 my-2`}
           variant={visibleAdmin || visibleEditor ? `primary` : `success`}
           onClick={handleBack}

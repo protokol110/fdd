@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useRef, useState} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
 import {Editor} from "@tinymce/tinymce-react";
@@ -13,7 +13,7 @@ import instance from "../../../services/http.service";
 
 const configValue = {
   language: "ru",
-  height: 700,
+  height: 500,
   plugins: [
     "advlist",
     "autolink",
@@ -192,14 +192,17 @@ const PostEdit = () => {
             />
           </FormGroup>
 
-          <Button
-            type="submit"
-            variant="success"
-            className="me-3"
-            disabled={isSubmitting}
-          >
-            Отправить
-          </Button>
+          <div className="mb-2">
+            <Button
+              type="submit"
+              variant="success"
+              className="me-3"
+              disabled={isSubmitting}
+              style={{backgroundColor: "#34606BFF", border: "none"}}
+            >
+              Отправить
+            </Button>
+          </div>
         </Form>
       )}
     </Formik>

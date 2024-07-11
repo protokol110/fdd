@@ -15,7 +15,7 @@ const validationSchema = Yup.object({
     .max(255, 'Must be 255 characters or less'),
   description: Yup.string()
     .required('Required')
-    .max(599, 'Must be 255 characters or less'),
+    .max(255, 'Must be 255 characters or less'),
 });
 
 const EditLinks = () => {
@@ -83,6 +83,7 @@ const EditLinks = () => {
             variant="success"
             className="me-3"
             disabled={isSubmitting}
+            style={{backgroundColor: "#34606BFF", border: "none", marginBottom:"10px"}}
           >
             Обновить
           </Button>

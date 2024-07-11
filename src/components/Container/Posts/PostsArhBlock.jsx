@@ -54,7 +54,7 @@ const PostsArhBlock = () => {
         return <PostRow post={post} key={post.id}/>;
       })}
 
-      <div className="post_pagination">
+      <div className="link_pagination">
         <Pagination>{pages}</Pagination>
       </div>
     </>

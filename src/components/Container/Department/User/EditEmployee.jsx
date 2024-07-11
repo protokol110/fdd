@@ -5,7 +5,7 @@ import {Button, FormControl, FormGroup, FormLabel} from "react-bootstrap";
 import {Formik, Form, ErrorMessage} from "formik";
 import * as Yup from "yup";
 
-import {getUsers, updateUser, deleteUser} from "../../../../store/userSlice";
+import {getUsers, updateUser, deleteUser, getUsersById} from "../../../../store/userSlice";
 import Bread from "../../Bread";
 import Loader from "../../../Present/Loader";
 
@@ -14,25 +14,40 @@ const EditEmployee = () => {
   const [employee, setEmployee] = useState({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const employees = useSelector((state) => state.user.users);
+  const employeeData = useSelector((state) => state.user.user);
   const [loading, setLoading] = useState(true);
+  const [initialValues, setInitialValues] = useState({
+    name: "",
+    phone: "",
+    description: "",
+    position: "",
+  });
 
   useEffect(() => {
-    dispatch(getUsers()).then(() => {
+    dispatch(getUsersById({id: Number(idEmp)})).then(() => {
       setLoading(false);
     });
   }, [dispatch]);
 
   useEffect(() => {
-    if (!loading && employees.length > 0) {
-      const employeeId = Number(idEmp);
-      const foundEmployee = employees.find((emp) => emp.id === employeeId);
-      setEmployee(foundEmployee);
+    if (!loading && employeeData) {
+      setEmployee(employeeData);
       setLoading(false);
     }
-  }, [dispatch, employees, idEmp, loading]);
+  }, [dispatch, employeeData, loading]);
 
-
+  useEffect(() => {
+    if (!loading && employeeData) {
+      setEmployee(employeeData);
+      setInitialValues({
+        name: employeeData.name,
+        phone: employeeData.phone,
+        description: employeeData.description,
+        position: employeeData.position,
+      });
+      setLoading(false);
+    }
+  }, [dispatch, employeeData, loading]);
 
   const SignupSchema = Yup.object().shape({
     name: Yup.string().required("Имя сотрудника обязательно для заполнения"),
@@ -68,12 +83,7 @@ const EditEmployee = () => {
     <>
       <Bread/>
       <Formik
-        initialValues={{
-          name: employee ? employee.name : "",
-          phone: employee ? employee.phone : "",
-          description: employee ? employee.description : "",
-          position: employee ? employee.position : "",
-        }}
+        initialValues={initialValues}
         validationSchema={SignupSchema}
         onSubmit={handleUpdate}
       >
@@ -144,7 +154,10 @@ const EditEmployee = () => {
             <Button type="submit" variant="success" className="me-3" disabled={isSubmitting}>
               Обновить
             </Button>
-            <Button type="button" variant="danger" onClick={handleDelete}>
+            <Button type="button" variant="danger" onClick={handleDelete} style={{
+              backgroundColor: "rgba(52, 96, 107, 1)",
+              marginBottom: "10px"
+            }}>
               Удалить
             </Button>
           </Form>

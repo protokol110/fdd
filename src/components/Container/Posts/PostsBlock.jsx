@@ -57,6 +57,7 @@ const PostsBlock = () => {
           onClick={() => {
             navigate(`/posts/new`);
           }}
+          style={{backgroundColor: "#34606BFF", border: "none"}}
         >
           Добавить
         </Button>
@@ -66,7 +67,7 @@ const PostsBlock = () => {
         return <PostRow post={post} key={post.id}/>;
       })}
 
-      <div className="post_pagination">
+      <div className="link_pagination">
         <Pagination>{pages}</Pagination>
       </div>
     </>

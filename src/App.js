@@ -26,7 +26,6 @@ import ReportEdit from "./components/Container/Report/ReportEdit";
 import AuthPage from "./components/Container/Auth/AuthPage";
 import TokenService from "./services/token.service";
 import EditDep from "./components/Container/Department/EditDep";
-import EmployeeList from "./components/Container/Department/User/EmployeeList";
 import ListLinks from "./components/Container/Links/ListLinks";
 import EditLinks from "./components/Container/Links/EditLinks";
 import LinkNew from "./components/Container/Links/LinkNew";
@@ -45,7 +44,7 @@ function App() {
 
   const location = useLocation();
 
-  let backgroundClass;
+  /*let backgroundClass;
   if (location.pathname === '/contacts'
     || location.pathname.startsWith('/departments')
     || location.pathname.startsWith('/employee')) {
@@ -66,12 +65,12 @@ function App() {
     backgroundClass = 'background_documents';
   } else {
     backgroundClass = 'background_default';
-  }
+  }*/
 
   return (
     <div className="body">
       <Header/>
-      <div className={`main_block ${backgroundClass}`}>
+      <div className={`main_block`}>
         <div className="main_part">
           <div className="main_part_main">
             <Routes>
@@ -112,7 +111,6 @@ function App() {
                   </RequireAuth>
                 }
               />
-              <Route path="/departments/:departmentId/employees" element={<EmployeeList/>}/>
               <Route path="/links" element={<ListLinks/>}/>
 
               <Route
@@ -210,10 +208,8 @@ function App() {
               <Route path="*" element={<NotFoundPage/>}/>
             </Routes>
           </div>
-          <RightSidePanel/>
         </div>
       </div>
-
       <Footer/>
     </div>
   );

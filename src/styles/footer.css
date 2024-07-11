@@ -1,13 +1,12 @@
 .footer {
     width: 100%;
     height: 55px;
-    margin-top: -9px;
-    background-color: #278f51;
+    background-color: rgba(52, 96, 107, 1);
+    margin-top: auto;
 }
 
 .footer_block {
     padding-top: 8px;
-    padding-bottom: 8px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -17,8 +16,14 @@
 }
 
 .footer_button {
-    border-color: white;
     color: white;
+    background-color:  rgb(86, 162, 182);
+    border: none;
+}
+
+.footer_button:hover {
+    border: none;
+    background-color:  rgb(86, 162, 182);
 }
 
 .footer_asb_inform {

@@ -92,7 +92,10 @@ const EditDep = () => {
               </FormControl.Feedback>
             </FormGroup>
 
-            <Button type="submit" variant="success" className="me-3" disabled={isSubmitting}>
+            <Button type="submit" variant="success" className="me-3" disabled={isSubmitting} style={{
+              backgroundColor: "rgba(52, 96, 107, 1)",
+              marginBottom: "10px"
+            }}>
               Обновить
             </Button>
             <Button type="button" variant="danger" onClick={handleDelete}>

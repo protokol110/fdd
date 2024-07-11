@@ -25,24 +25,27 @@
 }
 
 .body {
-  height: 100vh;
+  background-color: rgba(235, 240, 241, 1);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   font-family: "Roboto", serif;
 }
 
 .bread_link {
   text-decoration: none;
-  color: #04734b;
+  color: rgba(52, 96, 107, 1);
   font-size: 18px;
   max-width: 350px;
   text-align: center;
 }
 
 .bread_link:hover {
-  color: #00c77f;
+  color: rgb(86, 162, 182);
 }
 
 .bread_link:active {
-  color: #00c77f;
+  color: rgb(86, 162, 182);
 }
 
 .button_action {

@@ -84,6 +84,10 @@ const CreateDeport = () => {
               variant="success"
               className="me-3"
               disabled={isSubmitting}
+              style={{
+                backgroundColor: "rgba(52, 96, 107, 1)",
+                marginBottom: "10px"
+              }}
             >
               Отправить
             </Button>

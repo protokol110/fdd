@@ -1,10 +1,10 @@
 import {useEffect} from "react";
 import {Button, Image} from "react-bootstrap";
 import {Link, useNavigate} from "react-router-dom";
-import LogoAsb from "../../assets/logo/footer_asb_logo.png";
 import LogoLogin from "../../assets/logo/footer_login.png";
 import authService from "../../services/auth.service";
 import TokenService from "../../services/token.service";
+import RightSidePanel from "../Present/RightSidePanel";
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -28,15 +28,7 @@ const Footer = () => {
           <span> © 2024, ОАО "АСБ Беларусбанк" Минск, Беларусь</span>
         </div>
 
-        <a
-          href="http://lotus.asb.by/"
-          className="footer_asb_inform"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <Image className="mx-3" src={LogoAsb}/>
-          Информационные ресурсы
-        </a>
+        <RightSidePanel/>
 
         <div className="footer_login">
           {!token ? (

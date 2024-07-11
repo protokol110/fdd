@@ -32,11 +32,12 @@ const UsefulBlock = () => {
           type="submit"
           className="mb-3"
           onClick={() => navigate(`/educ/new`)}
+          style={{backgroundColor: "#34606BFF", border: "none"}}
         >
           Добавить
         </Button>
       )}
-      <Table>
+      <Table className="ps-2" style={{marginRight: "20px",backgroundColor: "#34606BFF", border: "none"}} >
         <thead>
         <TableHeader labels={PAHeaders}/>
         </thead>

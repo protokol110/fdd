@@ -65,6 +65,7 @@ const ListLinks = () => {
           onClick={() => {
             navigate(`/links/new`);
           }}
+          style={{backgroundColor: "#34606BFF", border: "none"}}
         >
           Добавить
         </Button>
@@ -74,6 +75,7 @@ const ListLinks = () => {
           <LinkRow
             link={link}
             key={link.id}
+            style={{color: "#34606BFF"}}
             onClick={() => navigate(`/post/${link.id}/edit`)}
           />
         );

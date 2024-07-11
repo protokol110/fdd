@@ -4,6 +4,7 @@ import instance from "../services/http.service";
 const initialState = {
   users: [],
   loading: false,
+  user: [],
   error: {show: false, text: ""},
 };
 
@@ -35,9 +36,20 @@ export const getUsers = createAsyncThunk("user/getUser", async () => {
   }
 });
 
+export const getUsersById = createAsyncThunk(
+  "user/getUsersById",
+  async ({id}) => {
+    try {
+      const res = await instance.get(`users/${id}`);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
 export const updateUser = createAsyncThunk(
   "user/updateUser",
-  async ({id ,name, phone, description, position, idDep}) => {
+  async ({id, name, phone, description, position, idDep}) => {
     const data = {
       id: id,
       name: name,
@@ -96,6 +108,18 @@ const userSlice = createSlice({
         state.error = {show: false, text: ""};
       })
       .addCase(getUsers.rejected, (state) => {
+        state.loading = false;
+      })
+      .addCase(getUsersById.pending, (state) => {
+        state.loading = true;
+        state.error = {show: false, text: ""};
+      })
+      .addCase(getUsersById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        state.error = {show: false, text: ""};
+      })
+      .addCase(getUsersById.rejected, (state) => {
         state.loading = false;
       })
       .addCase(updateUser.pending, (state) => {

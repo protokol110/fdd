@@ -1,8 +1,8 @@
-import { Button, Table } from "react-bootstrap";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { getAllNPA, clearError } from "../../../store/normativeSlice";
+import {Button, Table} from "react-bootstrap";
+import {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
+import {getAllNPA, clearError} from "../../../store/normativeSlice";
 import TokenService from "../../../services/token.service";
 import TablePARow from "../../Present/TablePARow";
 import TableHeader from "../../Present/TableHeader";
@@ -32,11 +32,12 @@ const NPABlock = () => {
           type="submit"
           className="mb-3"
           onClick={() => navigate(`/documents/new`)}
+          style={{backgroundColor: "#34606BFF", border: "none"}}
         >
           Добавить
         </Button>
       )}
-      <Table>
+      <Table className="ps-2" style={{marginRight: "20px", backgroundColor: "#34606BFF", border: "none"}}>
         <thead>
         <TableHeader labels={PAHeaders}/>
         </thead>

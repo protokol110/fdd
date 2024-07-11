@@ -15,7 +15,7 @@ const AddEmployee = () => {
   const SignupSchema = Yup.object().shape({
     name: Yup.string().required("Имя сотрудника обязательно для заполнения"),
     phone: Yup.string().required("Телефон сотрудника обязателен для заполнения"),
-    description: Yup.string().required("Описание сотрудника обязательно для заполнения"),
+    description: Yup.string().required("Вопросы по которым можно обращаться к сотруднику обязательно для заполнения"),
     position: Yup.string().required("Должность сотрудника обязательна для заполнения"),
   });
 
@@ -70,7 +70,7 @@ const AddEmployee = () => {
           </FormGroup>
 
           <FormGroup className="mb-3">
-            <FormLabel>Описание сотрудника</FormLabel>
+            <FormLabel>Вопросы по которым можно обращаться к сотрудник</FormLabel>
             <FormControl
               as="textarea"
               rows={3}
@@ -100,7 +100,10 @@ const AddEmployee = () => {
             </FormControl.Feedback>
           </FormGroup>
 
-          <Button type="submit" variant="success" disabled={isSubmitting}>
+          <Button type="submit" variant="success" disabled={isSubmitting} style={{
+            backgroundColor: "rgba(52, 96, 107, 1)",
+            marginBottom: "10px"
+          }}>
             Добавить сотрудника
           </Button>
         </Form>

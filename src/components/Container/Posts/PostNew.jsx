@@ -13,7 +13,7 @@ import instance from "../../../services/http.service";
 
 const configValue = {
   language: "ru",
-  height: 700,
+  height: 500,
   plugins: [
     "advlist",
     "autolink",
@@ -186,15 +186,17 @@ const PostNew = () => {
               onEditorChange={handleEditorChange}
             />
           </FormGroup>
-
-          <Button
-            type="submit"
-            variant="success"
-            className="me-3"
-            disabled={isSubmitting}
-          >
-            Отправить
-          </Button>
+          <div className="mb-2">
+            <Button
+              type="submit"
+              variant="success"
+              className="me-3"
+              disabled={isSubmitting}
+              style={{backgroundColor: "#34606BFF", border: "none"}}
+            >
+              Отправить
+            </Button>
+          </div>
         </Form>
       )}
     </Formik>

@@ -15,7 +15,7 @@ const LinkRow = ({link}) => {
         <a href={link.description}>{link.description}</a>
         <span>   </span>
         {(visibleAdmin || visibleEditor) && (
-          <Link to={`/links/edit/${link.id}`} className="link_row_body_adv">
+          <Link to={`/links/edit/${link.id}`} className="link_row_body_adv" style={{color: "#34606BFF"}}>
             Изменить
           </Link>
         )}

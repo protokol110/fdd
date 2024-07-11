@@ -32,6 +32,7 @@ const initialState = {
   },
   dataActive: 1,
   selectedDepartment: "",
+  idDep: null,
 };
 
 const fetchAll = async (url, dispatch, action) => {
@@ -134,7 +135,7 @@ export const updateDeport = createAsyncThunk(
 
 export const deleteDeport = createAsyncThunk(
   "department/DeleteDeport",
-  async (id, { getState }) => {
+  async (id, {getState}) => {
     try {
 
       await instance.delete(`delete/deport/${id}`);
@@ -316,6 +317,9 @@ const departmentSlice = createSlice({
     selectDepartment: (state, action) => {
       state.selectedDepartment = action.payload;
     },
+    setIdDep: (state, action) => {
+      state.idDep = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -366,5 +370,6 @@ export const {
   setError,
   clearError,
   selectDepartment,
+  setIdDep,
 } = departmentSlice.actions;
 export default departmentSlice.reducer;
