@@ -32,6 +32,7 @@ import LinkNew from "./components/Container/Links/LinkNew";
 import AddEmployee from "./components/Container/Department/User/addEmployee";
 import EditEmployee from "./components/Container/Department/User/EditEmployee";
 import RightSidePanel from "./components/Present/RightSidePanel";
+import PostArch from "./components/Container/Posts/PostArch";
 
 function RequireAuth({children, redirectTo}) {
   const isAuth =
@@ -159,7 +160,7 @@ function App() {
                 }
               />
               <Route path="actual" element={<PostsBlock/>}/>
-              <Route path="arh" element={<PostsArhBlock/>}/>
+              <Route path="arh" element={<PostArch/>}/>
               <Route path="documents" element={<NPABlock/>}/>
               <Route
                 path="documents/new"

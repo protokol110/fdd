@@ -120,7 +120,7 @@ const EditEmployee = () => {
               </FormControl.Feedback>
             </FormGroup>
             <FormGroup className="mb-3">
-              <FormLabel>Описание сотрудника</FormLabel>
+              <FormLabel>Вопросы по которым можно обращаться</FormLabel>
               <FormControl
                 as="textarea"
                 rows={3}
@@ -151,11 +151,14 @@ const EditEmployee = () => {
               </FormControl.Feedback>
             </FormGroup>
 
-            <Button type="submit" variant="success" className="me-3" disabled={isSubmitting}>
+            <Button type="submit" variant="success" className="me-3" disabled={isSubmitting} style={{
+              backgroundColor: "rgba(52, 96, 107, 1)",
+              marginBottom: "10px",
+              border: "none"
+            }}>
               Обновить
             </Button>
             <Button type="button" variant="danger" onClick={handleDelete} style={{
-              backgroundColor: "rgba(52, 96, 107, 1)",
               marginBottom: "10px"
             }}>
               Удалить

@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {updateLink, deleteLink, getLinks} from '../../../store/linksSlice';
+import {updateLink, deleteLink, getLinks, getLinksById} from '../../../store/linksSlice';
 import {Formik, Field, Form, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 import {Button, FormControl, FormGroup, FormLabel} from "react-bootstrap";
@@ -11,33 +11,34 @@ import {useParams} from "react-router-dom";
 
 const validationSchema = Yup.object({
   name: Yup.string()
-    .required('Required')
+    .required('Обязательное')
     .max(255, 'Must be 255 characters or less'),
   description: Yup.string()
-    .required('Required')
+    .required('Обязательное')
     .max(255, 'Must be 255 characters or less'),
 });
 
 const EditLinks = () => {
   const dispatch = useDispatch();
-  const {loading, error, links} = useSelector((state) => state.links);
+  const {loading, error, link} = useSelector((state) => state.links);
   const navigate = useNavigate();
   const {id} = useParams();
 
   useEffect(() => {
-    dispatch(getLinks());
+    dispatch(getLinksById({id}));
   }, [dispatch]);
-
-  const link = links.find(link => link.id === Number(id));
 
   const content = (
     <Formik
-      initialValues={{name: link.name, description: link.description}}
+      initialValues={{name: link?.name || '', description: link?.description || ''}}
       validationSchema={validationSchema}
       onSubmit={(values, {setSubmitting}) => {
-        dispatch(updateLink({name: values.name, description: values.description, id: id}));
-        setSubmitting(false);
-        navigate('/links')
+        if (link) {
+          dispatch(updateLink({name: values.name, description: values.description, id: id}));
+          setSubmitting(false);
+          dispatch(getLinks());
+          navigate('/links');
+        }
       }}
     >
       {({values, errors, isSubmitting, handleChange, handleBlur, handleSubmit}) => (
@@ -83,15 +84,17 @@ const EditLinks = () => {
             variant="success"
             className="me-3"
             disabled={isSubmitting}
-            style={{backgroundColor: "#34606BFF", border: "none", marginBottom:"10px"}}
+            style={{backgroundColor: "#34606BFF", border: "none", marginBottom: "10px"}}
           >
             Обновить
           </Button>
           <Button
             variant="danger"
             className="me-3"
+            style={{marginBottom: "10px"}}
             onClick={() => {
-              dispatch(deleteLink({id: link.id}));
+              dispatch(deleteLink({id: id}));
+              dispatch(getLinks());
               navigate('/links');
             }}
           >
@@ -99,7 +102,9 @@ const EditLinks = () => {
           </Button>
           <Button
             variant="secondary"
+            style={{marginBottom: "10px"}}
             onClick={() => {
+              dispatch(getLinks());
               navigate('/links');
             }}
           >

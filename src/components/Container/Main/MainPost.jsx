@@ -2,6 +2,8 @@ import {Col, Container, Image, Row} from "react-bootstrap";
 import PostFooter from "./PostFooter";
 import {useNavigate} from "react-router-dom";
 
+import img from  "../../../assets/default.jpg"
+
 const MainPost = ({post}) => {
   const navigate = useNavigate();
 
@@ -18,7 +20,7 @@ const MainPost = ({post}) => {
           <Row>
             <Image
               className="main_post_header_image"
-              src={`data:image/jpeg;base64,${post.mainIcon}`}
+              src={post.mainIcon ? `data:image/jpeg;base64,${post.mainIcon}` : img}
             />
           </Row>
 

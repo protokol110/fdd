@@ -3,6 +3,7 @@ import instance from "../services/http.service";
 
 const initialState = {
   links: [],
+  link: {},
   loading: false,
   linkDeleted: false,
   linkCreated: false,
@@ -11,7 +12,7 @@ const initialState = {
 };
 
 export const createLink = createAsyncThunk(
-  "link/createLinks",
+  "links/createLinks",
   async ({name, description}) => {
     const data = {
       name: name,
@@ -37,8 +38,19 @@ export const getLinks = createAsyncThunk(
     }
   });
 
+export const getLinksById = createAsyncThunk(
+  "links/getLinksById",
+  async ({id}) => {
+    try {
+      const res = await instance.get(`links/${id}`);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
 export const updateLink = createAsyncThunk(
-  "link/updateLink",
+  "links/updateLink",
   async ({name, description, id}) => {
     const data = {
       name: name,
@@ -55,7 +67,7 @@ export const updateLink = createAsyncThunk(
 );
 
 export const deleteLink = createAsyncThunk(
-  "link/deleteLink",
+  "links/deleteLink",
   async ({id}) => {
     try {
       const res = await instance.delete(`delete/link/${id}`);
@@ -104,6 +116,18 @@ const linkSlice = createSlice({
         state.error = {show: false, text: ""};
       })
       .addCase(getLinks.rejected, (state) => {
+        state.loading = false;
+      })
+      .addCase(getLinksById.pending, (state) => {
+        state.loading = true;
+        state.error = {show: false, text: ""};
+      })
+      .addCase(getLinksById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.link = action.payload;
+        state.error = {show: false, text: ""};
+      })
+      .addCase(getLinksById.rejected, (state) => {
         state.loading = false;
       })
       .addCase(updateLink.pending, (state) => {

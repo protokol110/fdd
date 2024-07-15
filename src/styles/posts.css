@@ -17,7 +17,8 @@
     margin-bottom: 18px;
 }
 
-.post_row_date {
+.post_r
+ow_date {
     background-color: #feffdd;
     width: 155px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
@@ -75,7 +76,7 @@
 }
 
 .main_page_block {
-    margin-top: 20px;
+    margin-top: 10px;
     display: flex;
     width: 100%;
 }
@@ -98,8 +99,8 @@
 }
 
 .main_post_header_image {
-    max-width: 400px;
-    max-height: 350px;
+    max-height: 400px;
+    max-width: 420px;
     padding: 0;
     padding-left: 10px;
 }
@@ -173,4 +174,8 @@
 
 .main_post_header_short_text {
     font-size: 16px;
+}
+
+.post_pagination{
+    margin-top: 10px;
 }

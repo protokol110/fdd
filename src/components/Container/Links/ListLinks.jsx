@@ -34,6 +34,10 @@ const ListLinks = () => {
     }
   }, [dispatch, currPage, linkDeleted, linkCreated, linkUpdated]);
 
+  useEffect(() => {
+    console.log()
+  }, );
+
   const links = useSelector((state) => state.links.links);
   const loading = useSelector((state) => state.links.loading);
   const error = useSelector((state) => state.links.error);

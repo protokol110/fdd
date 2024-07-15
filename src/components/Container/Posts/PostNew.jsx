@@ -11,9 +11,11 @@ import Loader from "../../Present/Loader";
 import ModalError from "../../Modals/ModalError";
 import instance from "../../../services/http.service";
 
+import img from  "../../../assets/default.jpg"
+
 const configValue = {
   language: "ru",
-  height: 500,
+  height: 420,
   plugins: [
     "advlist",
     "autolink",

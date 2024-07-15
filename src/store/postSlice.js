@@ -10,7 +10,7 @@ const initialState = {
   postsPage: [],
   postsSearch: [],
   currPage: 1,
-  currArhYear: 2023,
+  currArhYear: 2024,
   totalPages: 1,
   postsOnPage: 6,
   post: {},

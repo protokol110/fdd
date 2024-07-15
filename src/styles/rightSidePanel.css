@@ -14,14 +14,3 @@
   padding-bottom: 4px;
 }
 
-.rightSidePanel_menu_link:hover {
-  background-color: #c7e7b6;
-  color: #04734b;
-  border: 1px solid darkgray;
-}
-
-.rightSidePanel_menu_link:active {
-  background-color: #c7e7b6;
-  color: #04734b;
-  border: 1px solid darkgray;
-}

@@ -27,7 +27,7 @@ const PostsArhBlock = () => {
         isInitial: postsArhYears.length === 0,
       })
     );
-  }, [dispatch, currPage, currArhYear, postsArhYears]);
+  }, [dispatch, currPage, currArhYear]);
 
   const totalPages = useSelector((state) => state.post.totalPages);
 
@@ -54,7 +54,7 @@ const PostsArhBlock = () => {
         return <PostRow post={post} key={post.id}/>;
       })}
 
-      <div className="link_pagination">
+      <div className="link_pagination" >
         <Pagination>{pages}</Pagination>
       </div>
     </>

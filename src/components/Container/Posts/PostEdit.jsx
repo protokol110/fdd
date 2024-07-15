@@ -13,7 +13,7 @@ import instance from "../../../services/http.service";
 
 const configValue = {
   language: "ru",
-  height: 500,
+  height: 420,
   plugins: [
     "advlist",
     "autolink",

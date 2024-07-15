@@ -1,6 +1,6 @@
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {createLink} from '../../../store/linksSlice';
+import {createLink, getLinks, setLinkCreated} from '../../../store/linksSlice';
 import {Formik, Field, Form, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 import {Button, FormControl, FormGroup, FormLabel} from "react-bootstrap";
@@ -32,6 +32,7 @@ const LinkNew = () => {
       onSubmit={(values, {setSubmitting}) => {
         dispatch(createLink({name: values.name, description: values.description}));
         setSubmitting(false);
+        setLinkCreated(true)
         navigate('/links')
       }}
     >
@@ -56,7 +57,7 @@ const LinkNew = () => {
           </FormGroup>
 
           <FormGroup className="mb-3">
-            <FormLabel>Ссылка</FormLabel>
+            <FormLabel>Ссылка, требуется вставить полную ссылку</FormLabel>
             <FormControl
               as={Field}
               type="text"

@@ -5,15 +5,15 @@ import Banners from "../Container/Banners";
 import { changeCurrArhYear } from "store/postSlice";
 
 const RightSidePanel = () => {
-  const postsArhYears = useSelector((state) => state.post.postsArhYears);
+ /* const postsArhYears = useSelector((state) => state.post.postsArhYears);
   const currArhYear = useSelector((state) => state.post.currArhYear);
   const location = useLocation();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch();*/
 
   return (
     <div className="main_part_right">
       <div className="rightSidePanel_menu">
-        {location.pathname === "/arh"
+        {/*{location.pathname === "/arh"
           ? postsArhYears.map((year) => (
             <Button
               key={year}
@@ -29,7 +29,7 @@ const RightSidePanel = () => {
               {year}
             </Button>
           ))
-          : ""}
+          : ""}*/}
       </div>
 
       <div className="rightSidePanel_banners">

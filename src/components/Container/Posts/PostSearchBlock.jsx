@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {setCurrPage, getSearch, clearError} from "../../../store/postSlice";
 import {Pagination} from "react-bootstrap";

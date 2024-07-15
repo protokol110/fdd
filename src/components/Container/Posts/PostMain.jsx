@@ -79,7 +79,6 @@ const PostMain = () => {
 
       <div className="post">
         <Button
-          style={{backgroundColor: "#34606BFF", border: "none"}}
           className={visibleAdmin || visibleEditor ? `visually-hidden` : `me-2 my-2`}
           variant={visibleAdmin || visibleEditor ? `primary` : `success`}
           onClick={handleBack}
@@ -126,14 +125,28 @@ const PostMain = () => {
               src={`data:image/jpeg;base64,${post.mainIcon}`}
             />
           ) : null}
-          <span className="post_header_headline">{post.headline}</span>
+          <span className="post_header_headline" style={{
+            display: "-webkit-box",
+            WebkitLineClamp: "1",
+            WebkitBoxOrient: "vertical",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            wordWrap: "break-word"
+          }}>{post.headline}</span>
           <span className="post_header_public">{post.datePublic}</span>
         </div>
 
         <hr></hr>
 
         <div className="post_main">
-          <b>{post.shortText}</b>
+          <b style={{
+            display: "-webkit-box",
+            WebkitLineClamp: "1",
+            WebkitBoxOrient: "vertical",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            wordWrap: "break-word"
+          }}>{post.shortText}</b>
         </div>
 
         <hr></hr>

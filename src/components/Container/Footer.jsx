@@ -22,7 +22,7 @@ const Footer = () => {
   }, []);
 
   return (
-    <div className="footer">
+    <footer className="footer">
       <div className="footer_block">
         <div className="footer_asb_text">
           <span> © 2024, ОАО "АСБ Беларусбанк" Минск, Беларусь</span>
@@ -60,7 +60,7 @@ const Footer = () => {
           ) : null}
         </div>
       </div>
-    </div>
+    </footer>
   );
 };
 

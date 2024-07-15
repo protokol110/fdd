@@ -98,7 +98,9 @@ const EditDep = () => {
             }}>
               Обновить
             </Button>
-            <Button type="button" variant="danger" onClick={handleDelete}>
+            <Button type="button" variant="danger" onClick={handleDelete} style={{
+              marginBottom: "10px"
+            }}>
               Удалить
             </Button>
           </Form>
